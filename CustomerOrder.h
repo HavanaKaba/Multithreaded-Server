@@ -1,0 +1,44 @@
+#ifndef M2_CUSTOMERORDER_H
+#define M2_CUSTOMERORDER_H
+#pragma once
+// CustomerOrder Milestone - CustomerOrder Interface
+// CustomerOrder.h
+// Chris Szalwinski
+// v1.0 - 9/11/2015
+// v2.0 - 23/02/2016
+#include <iostream>
+#include <string>
+#include <vector>
+#include <utility>
+#include "Utilities.h"
+#include "CustomerItem.h"
+//#ifndef _MSC_VER
+#define NOEXCEPT noexcept
+//#else
+//#define NOEXCEPT
+//#endif
+
+class Item;
+class CustomerItem;
+
+class CustomerOrder {
+	std::string name;          // name of the customer
+	std::string product;       // name of the product
+	CustomerItem* order;       // address of the customer requests
+	unsigned int nOrders;      // number of requests
+	static size_t field_width; // current maximum field width // had to make this private, bc push_back was calling it
+public:
+	CustomerOrder(const std::string&);
+	CustomerOrder& operator=(const CustomerOrder&) = delete;
+	CustomerOrder(const CustomerOrder&);
+	CustomerOrder(CustomerOrder&&) NOEXCEPT;
+	CustomerOrder& operator=(CustomerOrder&&) NOEXCEPT;
+	~CustomerOrder();
+	unsigned int noOrders() const							{ return nOrders; }
+	const std::string& operator[](unsigned int) const;
+	void fill(Item&);
+	void remove(Item&);
+	bool empty() const;
+	void display(std::ostream&) const;
+};
+#endif
